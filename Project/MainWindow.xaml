@@ -1,0 +1,39 @@
+﻿<Window x:Class="Project.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:Project.ViewModel"
+        Title="Project Management App" Height="450" Width="800">
+    <Window.DataContext>
+        <local:ProjectViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="5,5,5,4" Height="50">
+            <Button Content="Загрузить" Width="100" Margin="5"/>
+            <Button Content="Сохранить" Width="100" Margin="5"/>
+            <!-- Другие кнопки для управления проектами -->
+            <TextBox Text="{Binding SelectedProject.StartDate, UpdateSourceTrigger=PropertyChanged, StringFormat='dd/MM/yyyy'}" Width="100" Margin="5"/>
+            <DatePicker SelectedDate="{Binding SelectedProject.StartDate, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="5"/>
+            <!-- Другие элементы управления для редактирования -->
+        </StackPanel>
+        
+
+        <DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding Tasks}" Margin="5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Задача" Binding="{Binding TaskName}"/>
+                <DataGridTextColumn Header="Срок" Binding="{Binding DueDate}"/>
+                <DataGridTemplateColumn Header="Статус">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Status}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+            </DataGrid.Columns>
+        </DataGrid>
+        
+    </Grid>
+</Window>
